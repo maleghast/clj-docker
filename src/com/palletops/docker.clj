@@ -4,6 +4,7 @@
    [cheshire.core :as json]
    [clj-http.client :as http]
    [clj-http.core :as http-core]
+   [clj-http.util :as http-util]
    [clojure.java.io :refer [copy file reader]]
    [clojure.string :as string :refer [blank? lower-case split]]
    [com.palletops.api-builder.api
@@ -66,7 +67,7 @@
   (let [^String charset (or charset
                             (-> resp :content-type-params :charset)
                             "UTF-8")
-        body (clj-http.util/force-byte-array body)
+        body (http-util/force-byte-array body)
         decode-func json-decode]
     (debugf "coerce-json-body %s %s" coerce (http/unexceptional-status? status))
     (cond
